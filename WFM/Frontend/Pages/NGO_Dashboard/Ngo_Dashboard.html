@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NGO Dashboard - Waste Food Management</title>
+    <link rel="stylesheet" href="Ngo_Dashboard.css">
+    <link rel="stylesheet" href="../Welcome/Welcome_page.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    /* ... other styles ... */
+    .pickups-table td:nth-child(2) {
+        /* Example: To hide the Request ID column on the My Pickups table */
+        /* / * display: none; * / */
+    }
+</style>
+</head>
+<body class="dashboard-body">
+    <header class="page-header">
+        <a href="#" class="logo">आहार<span class="logo-accent">.</span></a>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#" class="nav-link">Dashboard</a></li>
+                <li><a href="#available-donations" class="nav-link">Donations</a></li>
+                <li><a href="#my-pickups" class="nav-link">My Pickups</a></li>
+                <li><a href="#" class="nav-link">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="profile-card">
+                <div class="profile-avatar">
+                    <img class="ngo-logo-mark" src="../../assets/ngo-logo.png" alt="NGO logo">
+                </div>
+                <h3 class="ngo-name" id="ngoName">Hope Foundation</h3>
+                <p class="ngo-tagline">Feeding Communities, One Meal at a Time</p>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#overview" class="sidebar-link active"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <a href="#available-donations" class="sidebar-link"><i class="fas fa-boxes"></i> Available Donations</a>
+                <a href="#my-pickups" class="sidebar-link"><i class="fas fa-truck-pickup"></i> My Pickups</a>
+                <a href="#" class="sidebar-link"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </nav>
+        </aside>
+
+        <main class="dashboard-main-content">
+            <section id="overview" class="dashboard-section">
+                <h2 class="section-title">Dashboard Overview</h2>
+                <div class="stats-cards">
+                    <div class="stat-card">
+                        <i class="fas fa-check-circle stat-icon"></i>
+                        <h4 class="stat-value" id="completedPickups">0</h4>
+                        <p class="stat-label">Completed Pickups</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-truck stat-icon"></i>
+                        <h4 class="stat-value" id="ongoingPickups">0</h4>
+                        <p class="stat-label">Ongoing Pickups</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-hourglass-half stat-icon"></i>
+                        <h4 class="stat-value" id="pendingRequests">0</h4>
+                        <p class="stat-label">Pending Requests</p>
+                    </div>
+                    <div class="stat-card new-donations-card">
+                        <i class="fas fa-bell stat-icon"></i>
+                        <h4 class="stat-value" id="newDonations">0</h4>
+                        <p class="stat-label">New Donations</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="available-donations" class="dashboard-section">
+                <h2 class="section-title">Available Food Donations</h2>
+                <div class="table-container">
+                    <table class="donations-table">
+                        <thead>
+                            <tr>
+                                <th>Restaurant/Donor</th>
+                                <th>Food Type</th>
+                                <th>Quantity</th>
+                                <th>Location</th>
+                                <th>Expiry Time</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="availableDonationsTableBody">
+                            </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="my-pickups" class="dashboard-section">
+                <h2 class="section-title">🚚 My Pickup Requests</h2>
+                <div class="table-container">
+                    <table class="pickups-table">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Request ID</th>
+                                <th>Food Name</th>
+                                <th>Donor Name</th>
+                                <th>Quantity</th>
+                                <th>Request Time</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="myPickupsTableBody">
+                            </tbody>
+                    </table>
+                </div>
+            </section>
+            
+            <!-- <section id="history" class="dashboard-section">
+                <h2 class="section-title">History / Reports</h2>
+                <div class="chart-container">
+                    <canvas id="collectionTrendChart"></canvas>
+                </div>
+            </section>
+
+            <section id="profile" class="dashboard-section">
+                <h2 class="section-title">Profile & Settings</h2>
+                </section> -->
+        </main>
+    </div>
+
+    <footer class="page-footer">
+        </footer>
+    <script src="Ngo_Dashboard.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+</html>

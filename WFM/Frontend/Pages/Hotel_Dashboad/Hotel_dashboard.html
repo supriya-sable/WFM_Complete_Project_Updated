@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Dashboard - Waste Food Management</title>
+    <link rel="stylesheet" href="Hotel_Dashboard.css">
+    <link rel="stylesheet" href="../Welcome/Welcome_page.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        /* --- Modal Specific Styles (CRITICAL FOR UI) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: none; /* Hidden by default (CSS controlled by JS) */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-content {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 500px;
+            transform: scale(0.95);
+            transition: transform 0.3s ease-out;
+        }
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .modal-header h3 {
+            color: var(--text-dark);
+            font-size: 1.5rem;
+        }
+        .modal-close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-medium);
+        }
+        .modal-form .form-group {
+            margin-bottom: 15px;
+        }
+        .modal-form label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 5px;
+            color: var(--text-dark);
+        }
+        .modal-form input, .modal-form select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+        .modal-footer {
+            margin-top: 20px;
+            text-align: right;
+        }
+        .modal-footer button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s ease;
+        }
+        .btn-modal-save {
+            background: var(--accent1);
+            color: white;
+            margin-left: 10px;
+        }
+        .btn-modal-close {
+            background: #eee;
+            color: var(--text-dark);
+        }
+        /* Hides the Food ID Column */
+        .listings-table th:nth-child(2),
+        .listings-table td:nth-child(2) {
+            display: none;
+        }
+    </style>
+</head>
+<body class="dashboard-body">
+    <header class="page-header">
+        <a href="#" class="logo">आहार<span class="logo-accent">.</span></a>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#" class="nav-link">Dashboard</a></li>
+                <li><a href="#post-food" class="nav-link">Post Food</a></li>
+                <li><a href="#my-listings" class="nav-link">My Listings</a></li>
+                <li><a href="#pickup-requests" class="nav-link">Requests</a></li>
+                <li><a href="#" class="nav-link">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="profile-card">
+                <div class="profile-avatar">
+                    <!-- Image will remain placeholder unless image upload is implemented -->
+                    <img src="https://cdn-icons-png.flaticon.com/512/562/562678.png" alt="Hotel/Restaurant Logo">
+                </div>
+                <!-- ID hotelName is used to display the dynamic Hotel/Restaurant Name -->
+                <h3 class="hotel-name" id="hotelName">Hotel/Restaurant Name</h3>
+                <!-- Class hotel-tagline is used to display the dynamic Address -->
+                <p class="hotel-tagline">Reducing Waste, Feeding People</p>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#overview" class="sidebar-link active"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <a href="#post-food" class="sidebar-link"><i class="fas fa-plus-circle"></i> Post Food</a>
+                <a href="#my-listings" class="sidebar-link"><i class="fas fa-list-alt"></i> My Listings</a>
+                <a href="#pickup-requests" class="sidebar-link"><i class="fas fa-inbox"></i> Pickup Requests</a>
+                <a href="#" class="sidebar-link"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </nav>
+        </aside>
+
+        <main class="dashboard-main-content">
+            <!-- Overview Section -->
+            <section id="overview" class="dashboard-section">
+                <h2 class="section-title">Dashboard Overview</h2>
+                <div class="stats-cards">
+                    <div class="stat-card">
+                        <i class="fas fa-utensils stat-icon"></i>
+                        <h4 class="stat-value" id="totalDonations">0</h4>
+                        <p class="stat-label">Total Donations Made</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-hourglass-half stat-icon"></i>
+                        <h4 class="stat-value" id="pendingRequests">0</h4>
+                        <p class="stat-label">Pending Requests</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-check-circle stat-icon"></i>
+                        <h4 class="stat-value" id="completedDonations">0</h4>
+                        <p class="stat-label">Completed Donations</p>
+                    </div>
+                    <div class="stat-card notification-card">
+                        <i class="fas fa-bell stat-icon"></i>
+                        <h4 class="stat-value" id="notificationsCount">0</h4>
+                        <p class="stat-label">New Notifications</p>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- Post Food Availability Section -->
+            <section id="post-food" class="dashboard-section">
+                <h2 class="section-title">Post Food Availability</h2>
+                <!-- CRITICAL: Form must have enctype="multipart/form-data" -->
+                <form class="food-post-form" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="food-name">Food Name</label>
+                        <!-- FIX: Added name="Food_Name" -->
+                        <input type="text" id="food-name" name="Food_Name" placeholder="e.g., Samosa, Cooked Rice" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="food-description">Food Description</label>
+                        <!-- FIX: Added name="Food_Description" -->
+                        <input type="text" id="food-description" name="Food_Description" placeholder="e.g., Available, Leftover Lunch" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="food-quantity">Food Quantity (e.g., 10Kg, 30 plates)</label>
+                        <!-- FIX: Added name="Food_Quantity" -->
+                        <input type="text" id="food-quantity" name="Food_Quantity" placeholder="e.g., 10Kg or 30 meals" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="food-quality">Food Quality</label>
+                        <!-- FIX: Added name="Food_Quality" -->
+                        <input type="text" id="food-quality" name="Food_Quality" placeholder="e.g., Fresh, Cooked 2 hours ago" required>
+                    </div>
+                    
+                    <!-- NEW FIELD: Expiry Time -->
+                    <div class="form-group">
+                        <label for="expiry-time-hours">Expiry Time (Hours from now)</label>
+                        <!-- FIX: Added name="Expiry_Time_Hours" -->
+                        <input type="number" id="expiry-time-hours" name="Expiry_Time_Hours" placeholder="e.g., 4" min="1" required>
+                    </div>
+
+                    <!-- NEW FIELD: Food Image -->
+                    <div class="form-group">
+                        <label for="food-image-file">Food Image (Optional)</label>
+                        <!-- FIX: Added name="food_image_file" -->
+                        <input type="file" id="food-image-file" name="food_image_file" accept="image/*">
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Post Food</button>
+                </form>
+            </section>
+
+            <!-- My Listings, Pickup Requests, History, Profile Sections (omitted for brevity) -->
+            <section id="my-listings" class="dashboard-section">
+                <h2 class="section-title">My Food Listings</h2>
+                <div class="table-container">
+                    <table class="listings-table">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <!-- HIDDEN COLUMN: Food ID -->
+                                <th>Food ID</th> 
+                                <th>Name / Quality</th>
+                                <th>Quantity</th>
+                                <th>Expiry Time</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="myListingsTableBody">
+                            </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="pickup-requests" class="dashboard-section">
+                <h2 class="section-title">Pickup Requests</h2>
+                <div class="table-container">
+                    <table class="requests-table">
+                        <thead>
+                            <tr>
+                                <th>Request ID</th>
+                                <th>NGO Name</th>
+                                <th>Food ID</th>
+                                <th>Request Time</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pickupRequestsTableBody">
+                            </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="page-footer">
+        </footer>
+    <script src="Hotel_Dashboard.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- NEW MODAL STRUCTURE -->
+    <div id="editModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Food Listing <span id="modalFoodIdDisplay" class="text-sm text-gray-500"></span></h3>
+                <button class="modal-close-btn" id="modalClose">&times;</button>
+            </div>
+            <form id="editForm" class="modal-form">
+                <input type="hidden" id="edit-post-id">
+                <div class="form-group">
+                    <label for="edit-food-name">Food Name</label>
+                    <input type="text" id="edit-food-name" name="Food_Name" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-food-quantity">Quantity</label>
+                    <input type="text" id="edit-food-quantity" name="Food_Quantity" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-food-quality">Quality</label>
+                    <input type="text" id="edit-food-quality" name="Food_Quality" required>
+                </div>
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn-modal-close" id="modalCancel">Cancel</button>
+                <button type="button" class="btn-modal-save" id="modalSave">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

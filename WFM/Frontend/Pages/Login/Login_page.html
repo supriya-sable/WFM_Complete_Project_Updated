@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Waste Food Management</title>
+    <link rel="stylesheet" href="Login_page.css">
+</head>
+<body class="login-body">
+    <header class="page-header">
+        <a href="../Welcome/Welcome_page.html" class="logo">आहार<span class="logo-accent">.</span></a>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="../Welcome/Welcome_page.html" class="nav-link">Home</a></li>
+                <li><a href="#about" class="nav-link">About Us</a></li>
+                <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
+                <li><a href="#contact" class="nav-link">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="login-container">
+        <h1 class="login-title">Welcome Back!</h1>
+        <p class="login-subtitle">Log in to your account to continue.</p>
+
+        <form class="login-form">
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+                <span class="error-message" id="emailError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                <span class="error-message" id="passwordError"></span>
+            </div>
+            
+            <button  type="submit" class="login-btn">Log In</button>
+            
+            <p class="register-link">Don't have an account? 
+                <a href="../Registration/Registration_page.html">Register here</a>
+            </p>
+        </form>
+    </main>
+
+    <footer class="page-footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <a href="../Welcome/Welcome_page.html" class="footer-link">Home</a>
+                <a href="#about" class="footer-link">About Us</a>
+                <a href="#how-it-works" class="footer-link">How It Works</a>
+                <a href="#contact" class="footer-link">Contact</a>
+            </div>
+            <div class="footer-column">
+                <h3>Legal</h3>
+                <a href="#privacy" class="footer-link">Privacy Policy</a>
+                <a href="#terms" class="footer-link">Terms of Service</a>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <p class="footer-text">123 Food Street, City, Country</p>
+                <p class="footer-text">Email: contact@wastefood.org</p>
+                <p class="footer-text">Phone: +1 (555) 123-4567</p>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <a href="#" class="footer-link">Facebook</a>
+                <a href="#" class="footer-link">Twitter</a>
+                <a href="#" class="footer-link">Instagram</a>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2025 Waste Food Management System. All Rights Reserved.</p>
+        </div>
+    </footer>
+    <script src="Login_page.js"></script>
+</body>
+</html>
